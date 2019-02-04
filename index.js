@@ -26,6 +26,7 @@ app.use((req, res, next) => {
   );
   next();
 });
+app.use(express.static(path.join(__dirname, "client", "build")));
 
 app.use(bodyParser.json());
 
@@ -35,7 +36,9 @@ app.use((err, req, res, next) => {
   console.log(err);
   next();
 });
-
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
